@@ -82,26 +82,26 @@ class pair  {
 class Solution {
     public pair[] allPairs( long A[], long B[], long N, long M, long X) {
         // Your code goes here 
+        Set<Long> set = new HashSet<>();
         List<pair> list = new ArrayList<>();
-        HashMap<Long, Long> map = new HashMap<>();
-        
-        for(long i : A){
-            map.put(i, i);
-        }
         
         for(long i : B){
-            long diff = X - i;
-            if(map.containsKey(diff)){
-                pair p = new pair(diff, i);
+            set.add(i);
+        }
+        
+        Arrays.sort(A);
+        for(long i : A){
+            if(set.contains(X - i)){
+                pair p = new pair(i, X-i);
                 list.add(p);
             }
         }
         
-        Collections.sort(list, (a, b) -> Long.compare(a.first, b.first));
-        //Collections.sort(list);
-        pair[] pArr = new pair[list.size()];
-        list.toArray(pArr);
-        //Arrays.sort(pArr);
-        return pArr;
+        pair[] ans = new pair[list.size()];
+        int k = 0;
+        for(pair x : list){
+            ans[k++] = x;
+        }
+        return ans;
     }
 }
